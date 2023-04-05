@@ -1,36 +1,34 @@
 from collections import deque
 import sys
-
 input = sys.stdin.readline
-# 방문한 곳을 1로 표시할 것. 0으로 표시되고 + 나이트의 이동 범위라면 움직일 것
 
-dx = [-1, -2, -2, -1, 1, 2, 2, 1]
-dy = [-2, -1, 1, 2, -2, -1, 1, 2]
+dir = [(-2,-1),(-1,-2),(1,2),(2,1),(-1,2),(1,-2),(2,-1),(-2,1)]
 
-
-def bfs(x, y, wx, wy):
+def bfs(r,c):
+    global cnt
     q = deque()
-    q.append((x, y))
-    chess[x][y] = 1
+    q.append((r,c))
+    arr[r][c] = 0 #이동한 지점 -1로 표시하자
 
     while q:
-        x, y = q.popleft()
-        if x == wx and y == wy:
-            print(chess[x][y]-1)
+        r,c = q.popleft()
+        if r==want_r and c==want_c:
+            print(arr[want_r][want_c])
             return
-        else:
-            for k in range(8):
-                nx = x + dx[k]
-                ny = y + dy[k]
-                if 0<=nx<l and 0<=ny<l and chess[nx][ny] == 0:
-                    q.append((nx,ny))
-                    chess[nx][ny] = chess[x][y]+1
-
+        for k in range(8):
+            nr = r + dir[k][0]
+            nc = c + dir[k][1]
+            if 0<=nr<l and 0<=nc<l:
+                if arr[nr][nc] == 0:
+                    arr[nr][nc] += arr[r][c] +1
+                    q.append((nr,nc))
+    print(arr[want_r][want_c])
+    return
 T = int(input())
 for _ in range(T):
+    cnt = 0
     l = int(input())
-    chess = [[0] * l for _ in range(l)]
-    x, y = map(int, input().split())
-    want_x, want_y = map(int, input().split())
-    chess[x][y] = 1
-    bfs(x, y, want_x, want_y)
+    arr = [[0 for _ in range(l)] for _ in range(l)]
+    cur_r, cur_c = map(int, input().split())
+    want_r, want_c = map(int, input().split())
+    bfs(cur_r,cur_c)
