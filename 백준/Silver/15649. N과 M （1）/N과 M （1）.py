@@ -1,18 +1,15 @@
-N,M= map(int,input().split())
-# 1부터 N까지의 자연수 모임 중 길이가 M인 수열 뽑기
-result = []
-visit = [False] * (N+1)
-
+N, M = map(int, input().split())
+visited = [False] * (N+1)
+res =[]
 def partial(k):
-    if k==M:
-        print(' '.join(map(str,result)))
-        return
+    if k == M:
+        print(' '.join(map(str, res)))
     for i in range(1,N+1):
-        if not visit[i]:
-            visit[i] = True
-            result.append(i)
+        if not visited[i]:
+            visited[i] = True
+            res.append(i)
             partial(k+1)
-            visit[i] = False #추후 영향을 주지 않기 위해 원복시킨다.
-            result.pop() #추후 영향을~ 원복 2
+            res.pop()
+            visited[i] = False
 
 partial(0)
