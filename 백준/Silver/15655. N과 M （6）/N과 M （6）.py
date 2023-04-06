@@ -1,9 +1,15 @@
-from itertools import combinations
+def comb(k,s):
+    if k == M:
+        for i in range(M):
+            print(res[i], end=' ')
+        print()
+    else:
+        for i in range(s,N):
+            res[k] = lst[i]
+            comb(k+1,i+1)
 
 N,M = map(int, input().split())
 lst = list(map(int, input().split()))
 lst.sort()
-for j in combinations(lst, M):
-    for idx in range(M):
-        print(j[idx], end=' ')
-    print()
+res = [0] * M
+comb(0,0)
