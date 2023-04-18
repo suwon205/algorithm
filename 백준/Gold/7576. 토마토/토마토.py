@@ -1,34 +1,34 @@
-import sys
-input = sys.stdin.readline
 from collections import deque
 
+dir = [(0,-1),(0,1),(1,0),(-1,0)]
 q = deque()
-dir = [(0, -1), (0, 1), (1, 0), (-1, 0)]
-
 def bfs():
     while q:
-        x, y = q.popleft()
+        r,c = q.popleft()
         for k in range(4):
-            nx = x + dir[k][0]
-            ny = y + dir[k][1]
-            if 0 <= nx < N and 0 <= ny < M and arr[nx][ny] == 0:
-                arr[nx][ny] = arr[x][y] +1
-                q.append((nx, ny))
-
-M, N = map(int, input().split())
-arr = [list(map(int, input().split())) for _ in range(N)]
+            nr = r + dir[k][0]
+            nc = c + dir[k][1]
+            if 0<=nr<N and 0<=nc<M and box[nr][nc] == 0:
+                box[nr][nc] = box[r][c] +1
+                q.append((nr,nc))
+    return
+M,N = map(int, input().split())
+box = [list(map(int, input().split())) for _ in range(N)]
 
 for r in range(N):
     for c in range(M):
-        if arr[r][c] == 1:
+        if box[r][c] == 1:
             q.append((r,c))
-res = 0
 bfs()
-#sumV 합을 구한다.
-for i in arr:
-    for k in i:
-        if k == 0:
+maxV = 0
+while True:
+    for row in range(N):
+        if 0 in box[row]:
             print(-1)
             exit(0)
-    res = max(res, max(i))
-print(res-1)
+        if maxV < max(box[row]):
+            maxV = max(box[row])
+    print(maxV-1)
+    # print('******')
+    # print(maxV)
+    break
