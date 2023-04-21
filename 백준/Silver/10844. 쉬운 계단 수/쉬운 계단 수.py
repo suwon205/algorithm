@@ -14,7 +14,4 @@ while cnt != N-1:
             tmp[idx+1] += DP[idx]
             tmp[idx-1] += DP[idx]
     cnt += 1
-if N == 1:
-    print(sum(tmp))
-else:
-    print((sum(tmp))%1000000000)
+print(sum(tmp)%1000000000)
