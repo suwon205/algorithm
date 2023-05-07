@@ -4,7 +4,6 @@ def AeqB(A,cnt):
     elif A==B:
         print(cnt+1)
         exit()
-        return cnt+1
     else:
         AeqB(A*2, cnt + 1)
         AeqB(int(str(A)+'1'), cnt +1)
