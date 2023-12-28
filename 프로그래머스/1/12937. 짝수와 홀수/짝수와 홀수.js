@@ -1,7 +1,7 @@
 function solution(num) {
     var answer = 'Odd';
     if (num % 2 == 0) {
-        return "Even"
+        answer = 'Even';
     }
     return answer;
 }
