@@ -1,13 +1,12 @@
-N = int(input())
+n = int(input())
+tri = [list(map(int, input().split())) for _ in range(n)]
 
-triangle = [list(map(int, input().split())) for _ in range(N)]
-
-for r in range(1,N):
+for r in range(1, n):
     for c in range(r+1):
         if c == 0:
-            triangle[r][c] = triangle[r-1][0] + triangle[r][c]
+            tri[r][c] += tri[r-1][0]
         elif c == r:
-            triangle[r][c] = triangle[r-1][c-1] + triangle[r][c]
+            tri[r][c] += tri[r-1][c-1]
         else:
-            triangle[r][c] = max(triangle[r-1][c-1], triangle[r-1][c]) + triangle[r][c]
-print(max(triangle[-1]))
+            tri[r][c] += max(tri[r-1][c], tri[r-1][c-1])
+print(max(tri[-1]))
