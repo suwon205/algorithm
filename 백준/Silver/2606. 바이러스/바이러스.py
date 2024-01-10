@@ -1,28 +1,26 @@
 from collections import deque
-def bfs(computer):
-    global cnt
+
+def find(startC):
+    cnt = 0
     q = deque()
-    visited[computer] = True
-    q.append(computer)
+    q.append(startC)
+    infection[startC] = True
+
     while q:
-        tmp = q.popleft()
-        for k in cpt[tmp]:
-            # print(cpt[tmp], visited)
-            if not visited[k]:
+        nearC = q.popleft()
+        for neighbor in computer[nearC]:
+            if not infection[neighbor]:
+                infection[neighbor] = True
                 cnt += 1
-                visited[k] = True
-                q.append(k)
-    return
+                q.append(neighbor)
+    return cnt
 
-
-N = int(input())
-cnt = 0
-pair = int(input())
-cpt = [[] for _ in range(N+1)]
-visited = [False] * (N+1)
-for i in range(pair):
-    cp1, cp2 = map(int, input().split())
-    cpt[cp1].append(cp2)
-    cpt[cp2].append(cp1)
-bfs(1)
-print(cnt)
+num = int(input())
+link = int(input())
+computer = [[] for _ in range(num + 1)]
+for _ in range(link):
+    a, b = map(int, input().split())
+    computer[a].append(b)
+    computer[b].append(a)
+infection = [False] * (num + 1)
+print(find(1))
