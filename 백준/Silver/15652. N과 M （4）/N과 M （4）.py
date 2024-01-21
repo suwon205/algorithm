@@ -1,17 +1,15 @@
-def dfs(k):
-    if len(res)==M:
-        print(' '.join(map(str, res)))
+def backtracking(st):
+    if len(lst) == M:
+        print(' '.join(map(str, lst)))
         return
     else:
-        for i in range(k,N+1):
-            if not visit[i]:
-                res.append(i)
-                dfs(i)
-                res.pop()
-
+        for i in range(st, N + 1):
+            if not used[i]:
+                lst.append(i)
+                backtracking(i)
+                lst.pop()
 
 N,M = map(int, input().split())
-res = []
-visit = [False] * (N+1)
-
-dfs(1)
+used = [False] * (N+1)
+lst = []
+backtracking(1)
