@@ -1,21 +1,18 @@
-def per(k):
-    if k == M:
-        if sorted(res) == res:
-            for i in range(M):
-                print(res[i], end=' ')
-            print()
-            return
-    else:
-        for i in range(N):
-            if not used[i]:
-                res[k] = lstn[i]
-                used[i] = True
-                per(k+1)
-                used[i] = False
+# 1부터 N까지 자연수 중에서 중복 없이 M개를 고른 오름차순 수열 만들기
 
-N,M = map(int, input().split())
+def backtracking(st):
+    if len(lst) == M: # 수열 완성
+        if sorted(lst) == lst:
+            for i in lst:
+                print(i, end=' ')
+            print()
+    else:
+        for i in range(st, N+1):
+            if i not in lst:
+                lst.append(i)
+                backtracking(st + 1)
+                lst.pop()
+
+N, M = map(int, input().split())
 lst = []
-lstn = [n+1 for n in range(N)]
-res = [-1] * M
-used = [False] * N
-per(0)
+backtracking(1)
