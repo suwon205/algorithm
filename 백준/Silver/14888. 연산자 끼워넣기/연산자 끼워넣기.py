@@ -1,21 +1,31 @@
+def calc(i, st, plus, minus, multiply, divide):
+    global minV
+    global maxV
+
+    if i == N:
+        if minV > st:
+            minV = st
+        if maxV < st:
+            maxV = st
+        return
+
+    if plus:
+        calc(i + 1, st + lst[i], plus - 1, minus, multiply, divide)
+    if minus:
+        calc(i + 1, st - lst[i], plus, minus - 1, multiply, divide)
+    if multiply:
+        calc(i + 1, st * lst[i], plus, minus, multiply - 1, divide)
+    if divide and st >= 0:
+        calc(i + 1, st // lst[i], plus, minus, multiply, divide - 1)
+    elif divide and st < 0:
+        calc(i + 1, -((-st) // lst[i]), plus, minus, multiply, divide - 1)
+
 N = int(input())
-number = list(map(int, input().split()))
-pl, mi, mul, div = map(int, input().split())
-minV = 9999999999999
-maxV = -9999999999999
-def calc(tmp, idx, pl, mi, mul, div):
-    global minV, maxV
-    if idx == N:
-        maxV = max(maxV, tmp)
-        minV = min(minV, tmp)
-    if pl>0:
-        calc(tmp + number[idx], idx+1, pl-1, mi, mul, div)
-    if mi>0:
-        calc(tmp - number[idx], idx+1, pl, mi-1, mul, div)
-    if mul>0:
-        calc(tmp * number[idx], idx+1, pl, mi, mul-1, div)
-    if div>0:
-        calc(int(tmp / number[idx]), idx+1, pl, mi, mul, div-1)
-calc(number[0],1,pl, mi, mul, div)
+lst = list(map(int, input().split()))
+operator = list(map(int, input().split()))
+
+maxV = -1000000000
+minV = 1000000000
+calc(1, lst[0], *operator)
 print(maxV)
 print(minV)
