@@ -1,29 +1,22 @@
 def solution(N, stages):
     answer = []
-    # 스테이지에 도달했으나 아직 클리어하지 못한 경우
-    challenge = {}
-    # 스테이지에 도달한 경우
-    success = {}
-    percent = [] # 실패율
-    
-    for i in range(1, N + 2):
-        challenge[i] = 0
-        
+    challenge = [0]*(N+1) # challenge[n]은 n스테이지에 도전한 사람의 수
+    fail = [0]*(N+1) # 성공한 사람의 수
+    percent = []
     for stage in stages:
-        for i in range(1, stage + 1):
+        for i in range(stage):
             challenge[i] += 1
-    print(challenge)
-    for i in range(1, len(challenge)):
-        success[i] = challenge[i] - challenge[i + 1]
-    print(success)
-    
-    for i in range(1, N + 1):
-        if challenge[i] == 0:
-            percent.append((0, i))
+    for idx in range(N):
+        fail[idx] = challenge[idx] - challenge[idx+1]
+    print(challenge, fail)
+    for idx in range(N):
+        if challenge[idx] == 0:
+            percent.append([idx+1, 0])
         else:
-            percent.append((int(success[i]) / int(challenge[i]), i))
+            percent.append([idx+1, fail[idx]/challenge[idx]])
     print(percent)
-    percent.sort(key = lambda x: -x[0])
+    percent.sort(key = lambda x : (-x[1], x[0]))
+    print(percent)
     for p in percent:
-        answer.append(p[1])
+        answer.append(p[0])
     return answer
