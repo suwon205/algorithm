@@ -1,25 +1,22 @@
 def solution(n, lost, reserve):
     answer = 0
-    students = [1] * n
-    
-    lost_set = list(set(lost) - set(reserve)) # 진짜로 잃어버린 경우만 남도록
-    reserve_set = list(set(reserve) - set(lost)) # 진짜로 여분이 있는 경우만 남도록
-    
-    for idx in lost_set:
-        students[idx - 1] -= 1
-    for idx in reserve_set:
-        students[idx - 1] += 1
-    
+    r_lost = list(set(lost) - set(reserve))
+    r_reserve = list(set(reserve) - set(lost))
+    lst = [1 for _ in range(n)]
+    for idx in r_lost:
+        lst[idx - 1] -= 1
+    for idx in r_reserve:
+        lst[idx - 1] += 1
     for idx in range(n):
-        if students[idx] == 0:
-            if idx > 0 and students[idx - 1] >= 2:
-                students[idx] += 1
-                students[idx - 1] -= 1
-            elif idx < n - 1 and students[idx + 1] >= 2:
-                students[idx] += 1
-                students[idx + 1] -= 1
-
-    for cloth in students:
-        if cloth:
+        if lst[idx] == 0:
+            if idx > 0 and lst[idx - 1] == 2:
+                lst[idx - 1] -= 1
+                lst[idx] += 1
+            elif idx < n - 1 and lst[idx + 1] == 2:
+                lst[idx + 1] -= 1
+                lst[idx] += 1
+    print(lst)
+    for l in lst:
+        if l > 0:
             answer += 1
     return answer
